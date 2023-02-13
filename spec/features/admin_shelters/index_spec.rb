@@ -26,7 +26,7 @@ RSpec.describe "Admin Shelters Index" do
       shelter_3 = Shelter.create(name: 'Fancy pets of Colorado', city: 'Denver, CO', foster_program: true, rank: 10)
       pet1 = Pet.create!(adoptable: true, age: 46, breed: 'snapping', name: 'Shelly', shelter_id: shelter_1.id, )
       app1 = Application.create!(name: 'Matt Smith', street_address: "1101 Main", city: "Denver", state: "CO", zipcode: 55555, description: "I like turtles!", status: "In Progress",  )
-      # petapplication1 = PetApplication.create!(pet_id: pet1.id, application_id: app1.id)
+      petapplication1 = PetApplication.create!(pet_id: pet1.id, application_id: app1.id)
 
       visit "/admin/shelters"
      
