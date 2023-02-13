@@ -24,6 +24,10 @@ RSpec.describe Shelter, type: :model do
     @pet_2 = @shelter_1.pets.create(name: 'Clawdia', breed: 'shorthair', age: 3, adoptable: true)
     @pet_3 = @shelter_3.pets.create(name: 'Lucille Bald', breed: 'sphynx', age: 8, adoptable: true)
     @pet_4 = @shelter_1.pets.create(name: 'Ann', breed: 'ragdoll', age: 5, adoptable: true)
+
+    @application_1 = Application.create!(name: 'Matt Smith', street_address: "1101 Main", city: "Denver", state: "CO", zipcode: 55555, description: "I like turtles!", status: "In Progress",  )
+
+    @pet_application_1 = PetApplication.create!(pet_id: @pet_1.id, application_id: @application_1.id)
   end
 
   describe 'class methods' do
@@ -44,8 +48,14 @@ RSpec.describe Shelter, type: :model do
         expect(Shelter.order_by_number_of_pets).to eq([@shelter_1, @shelter_3, @shelter_2])
       end
     end
+  
+    describe '#list_pending' do
+      it 'lists shelters with applications that have status as In progress' do
+      expect(Shelter.list_pending).to eq([@shelter_1])
+      end
+    end
   end
-
+  
   describe 'instance methods' do
     describe '.adoptable_pets' do
       it 'only returns pets that are adoptable' do
