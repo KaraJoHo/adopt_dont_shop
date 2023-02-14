@@ -63,4 +63,31 @@ RSpec.describe 'Admin Applications Show Page' do
       end
     end
   end
+
+  describe 'As a visitor when there are two applications
+  in the system for the same pet, when I visit 
+  the admin application show page for one of 
+  the applications and I approve or reject the 
+  pet for that application' do
+    it 'does not change the status for other applications related to that pet' do
+    shelter1 = Shelter.create!(foster_program: true, name: 'Pet Friends', city: "Denver", rank: 3)
+    app1 = Application.create!(name: 'Matt Smith', street_address: "1101 Main", city: "Denver", state: "CO", zipcode: 55555, description: "I like turtles!", status: "In Progress",)
+    app2 = Application.create!(name: 'Timothy Timoth', street_address: "666 Main", city: "Denver", state: "CO", zipcode: 55555, description: "I like turtles!", status: "In Progress",)
+    pet1 = Pet.create!(adoptable: true, age: 46, breed: 'snapping', name: 'Shelly', shelter_id: shelter1.id, )
+    pet2 = Pet.create!(adoptable: true, age: 2, breed: 'husky', name: 'Benedict McBark', shelter_id: shelter1.id,)
+    pet3 = Pet.create!(adoptable: true, age: 2, breed: 'husky', name: 'Gabe', shelter_id: shelter1.id,)
+    petapplication1 = PetApplication.create!(pet_id: pet1.id, application_id: app1.id, status: "In Progress")
+    petapplication2 = PetApplication.create!(pet_id: pet2.id, application_id: app1.id, status: "In Progress")
+    petapplication3 = PetApplication.create!(pet_id: pet3.id, application_id: app1.id, status: "In Progress")
+    petapplication4 = PetApplication.create!(pet_id: pet1.id, application_id: app2.id, status: "In Progress")
+
+      visit "/admin/applications/#{app1.id}"
+      click_button("Approve Shelly")
+      visit "/admin/applications/#{app2.id}"
+
+      expect(page).to have_button("Approve #{petapplication4.pet.name}")
+      expect(page).to have_button("Reject this pet for adoption")
+      expect(page).to have_content("Shelly")
+    end
+  end
 end
