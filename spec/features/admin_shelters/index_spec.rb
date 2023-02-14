@@ -29,7 +29,7 @@ RSpec.describe "Admin Shelters Index" do
       petapplication1 = PetApplication.create!(pet_id: pet1.id, application_id: app1.id)
 
       visit "/admin/shelters"
-     
+
       within('.pendingshelters') do
         expect(page).to have_content(shelter_1.name)
         expect(page).to_not have_content(shelter_2.name)
