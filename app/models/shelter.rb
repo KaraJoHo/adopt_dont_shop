@@ -34,7 +34,7 @@ class Shelter < ApplicationRecord
   end
 
   def self.list_pending
-    Shelter.joins(:applications).where("status = 'In Progress'")
+    Shelter.joins(:applications).where("applications.status = 'In Progress'")
   end
 
   def self.order_by_reverse_alphabetical 
