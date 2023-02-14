@@ -1,11 +1,12 @@
 <h1>Application For: <%= @application.name %></h1>
-
+ <h3>Application Status: <%= @application.status %></h3>
 
 <div class = "approve_or_reject">
   <h3>Pets Wanted</h3>
 
+
   <% @pet_applications.each do |pet_app| %>
-  <div id = <%= "#{pet_app.id}" %>>
+  <div id = <%= "#{pet_app.id}" %>> 
    <h4><%= "#{pet_app.pet.name}" %></h4>
     <p>
       <%if pet_app.status == "Accepted" %> 
