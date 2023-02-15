@@ -12,8 +12,7 @@ class AdminApplicationsController < ApplicationController
     @application = @pet_application.application 
     @pet_applications = @application.pet_applications 
 
-    # Later user story, dosn't do anything right now
-    if @application.application_status_count("Rejected") > 0 #.any?
+    if @application.application_status_count("Rejected") > 0 
       @application.update!(status: "Rejected")
     elsif @application.application_status_count("Accepted") == @pet_applications.count 
       @application.update!(status: "Accepted")
