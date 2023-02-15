@@ -8,7 +8,6 @@ Rails.application.routes.draw do
   patch '/applications/:id', to: 'applications#update'
 
   post '/pet_applications/new', to: 'pet_applications#create'
-  # patch '/pet_applications/:id', to: 'pet_applications#update'
 
   get '/admin/shelters', to: 'admin_shelters#index'
 
