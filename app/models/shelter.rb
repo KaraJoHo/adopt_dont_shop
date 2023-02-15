@@ -40,4 +40,8 @@ class Shelter < ApplicationRecord
   def self.order_by_reverse_alphabetical 
     Shelter.find_by_sql(" SELECT * FROM shelters ORDER BY name DESC; ")
   end
+
+  def self.find_shelter_name_city(id)
+    Shelter.find_by_sql(" SELECT name, city FROM shelters WHERE id = #{id}")
+  end
 end
