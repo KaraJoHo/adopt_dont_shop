@@ -25,9 +25,9 @@ RSpec.describe Shelter, type: :model do
     @pet_3 = @shelter_3.pets.create(name: 'Lucille Bald', breed: 'sphynx', age: 8, adoptable: true)
     @pet_4 = @shelter_1.pets.create(name: 'Ann', breed: 'ragdoll', age: 5, adoptable: true)
 
-    @application_1 = Application.create!(name: 'Matt Smith', street_address: "1101 Main", city: "Denver", state: "CO", zipcode: 55555, description: "I like turtles!", status: "In Progress",  )
+    @application_2 = Application.create!(name: 'Joe Smith', street_address: "1101 Main", city: "Denver", state: "CO", zipcode: 55555, description: "I like turtles!", status: "Pending")
 
-    @pet_application_1 = PetApplication.create!(pet_id: @pet_1.id, application_id: @application_1.id)
+    @pet_application_2 = PetApplication.create!(pet_id: @pet_1.id, application_id: @application_2.id)
   end
 
   describe 'class methods' do
@@ -84,6 +84,31 @@ RSpec.describe Shelter, type: :model do
     describe '::order_by_reverse_alphabetical' do 
       it 'orders shelters in reverse alphabetical order' do 
         expect(Shelter.order_by_reverse_alphabetical).to eq([@shelter_2, @shelter_3, @shelter_1])
+      end
+    end
+
+    describe '::order_by_alphabetical pending' do 
+      it 'orders shelter with pending applications alphabetically' do 
+        Shelter.destroy_all 
+        Pet.destroy_all 
+        Application.destroy_all
+        shelter_1 = Shelter.create(name: 'Aurora shelter', city: 'Aurora, CO', foster_program: false, rank: 9)
+        shelter_2 = Shelter.create(name: 'RGV animal shelter', city: 'Harlingen, TX', foster_program: false, rank: 5)
+        shelter_3 = Shelter.create(name: 'Fancy pets of Colorado', city: 'Denver, CO', foster_program: true, rank: 10)
+        pet1 = Pet.create!(adoptable: true, age: 46, breed: 'snapping', name: 'Shelly', shelter_id: shelter_1.id, )
+        app1 = Application.create!(name: 'Matt Smith', street_address: "1101 Main", city: "Denver", state: "CO", zipcode: 55555, description: "I like turtles!", status: "Pending")
+        petapplication1 = PetApplication.create!(pet_id: pet1.id, application_id: app1.id)
+        pet2 = Pet.create!(adoptable: true, age: 46, breed: 'snapping', name: 'Shelly', shelter_id: shelter_2.id, )
+        app2 = Application.create!(name: 'Smith Smith', street_address: "1101 Main", city: "Denver", state: "CO", zipcode: 55555, description: "I like turtles!", status: "Pending")
+        petapplication2 = PetApplication.create!(pet_id: pet2.id, application_id: app2.id)
+
+        expect(Shelter.order_by_alphabetical_pending).to eq([shelter_1, shelter_2])
+      end
+    end
+    
+    describe '#average_pet_age' do 
+      it 'calculates average age for pets at the specific shelter' do 
+        expect(@shelter_1.average_pet_age).to eq(4.33)
       end
     end
   end
