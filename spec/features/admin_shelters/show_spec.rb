@@ -9,10 +9,9 @@ RSpec.describe "Admin Shelters Show" do
       shelter_3 = Shelter.create(name: 'Fancy pets of Colorado', city: 'Denver, CO', foster_program: true, rank: 10)
 
       visit "admin/shelters/#{shelter_1.id}"
-      save_and_open_page
+   
       expect(page).to have_content("Name: #{shelter_1.name}")
       expect(page).to have_content("City: #{shelter_1.city}")
-
     end
   end
 end   
