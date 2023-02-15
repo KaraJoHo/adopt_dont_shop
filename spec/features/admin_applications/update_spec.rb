@@ -25,7 +25,7 @@ RSpec.describe 'Admin Applications Show Page' do
           click_button("Approve #{pet1.name}")
           click_button("Approve #{pet2.name}")
           click_button("Approve #{pet3.name}")
-          save_and_open_page
+        
           expect(current_path).to eq("/admin/applications/#{app1.id}")
           expect(page).to have_content("Application Status: Accepted")
 
