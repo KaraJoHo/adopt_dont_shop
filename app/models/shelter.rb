@@ -44,4 +44,8 @@ class Shelter < ApplicationRecord
   def self.order_by_alphabetical_pending 
     Shelter.joins(:applications).order(:name).where("applications.status = 'Pending'")
   end
+
+  def average_pet_age
+    pets.average(:age).to_f.round(2)
+  end
 end
