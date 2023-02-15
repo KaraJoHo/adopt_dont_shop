@@ -10,7 +10,6 @@ RSpec.describe 'Applications New' do
           pet_2 = Pet.create(adoptable: true, age: 3, breed: 'doberman', name: 'Lobster', shelter_id: shelter.id)
 
            visit "/pets"
-          #  save_and_open_page
 
            expect(page).to have_link("Start an Application")
 
@@ -29,7 +28,7 @@ RSpec.describe 'Applications New' do
            expect(page).to have_content("#{new_application.name}")
         end
 
-        it 'cannot create an artist without having all fields entered in the form' do 
+        it 'cannot create an application without having all fields entered in the form' do 
           shelter = Shelter.create(name: 'Aurora shelter', city: 'Aurora, CO', foster_program: false, rank: 9)
           pet_1 = Pet.create(adoptable: true, age: 1, breed: 'sphynx', name: 'Lucille Bald', shelter_id: shelter.id)
           pet_2 = Pet.create(adoptable: true, age: 3, breed: 'doberman', name: 'Lobster', shelter_id: shelter.id)
