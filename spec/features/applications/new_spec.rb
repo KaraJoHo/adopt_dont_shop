@@ -35,7 +35,7 @@ RSpec.describe 'Applications New' do
 
            visit "/applications/new"
            click_button("Submit")
-           new_application = Application.last
+      
            expect(current_path).to eq("/applications/")
            expect(page).to have_content("Name can't be blank")
            expect(page).to have_content("Street address can't be blank")
