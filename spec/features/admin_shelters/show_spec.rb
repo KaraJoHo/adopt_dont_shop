@@ -13,6 +13,7 @@ RSpec.describe "Admin Shelters Show Page" do
     @pet_3 = @shelter_3.pets.create(name: 'Lucille Bald', breed: 'sphynx', age: 8, adoptable: true)
     @pet_4 = @shelter_1.pets.create(name: 'Ann', breed: 'ragdoll', age: 5, adoptable: true)
   end
+  
   describe 'as a visitor' do 
     it 'has a section for statisitcs with average of adoptable pets at that shelter' do 
       visit "/admin/shelters/#{@shelter_1.id}"
@@ -21,6 +22,16 @@ RSpec.describe "Admin Shelters Show Page" do
         expect(page).to have_content("Statistics")
         expect(page).to have_content("#{@shelter_1.name}: 4.33")
       end
+    end
+  end
+
+  describe 'as a visitor' do
+    it 'shows the shelter name and address' do
+
+    visit "admin/shelters/#{@shelter_1.id}"
+ 
+    expect(page).to have_content("Name: #{@shelter_1.name}")
+    expect(page).to have_content("City: #{@shelter_1.city}")
     end
   end
 end

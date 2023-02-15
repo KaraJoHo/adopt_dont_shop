@@ -48,4 +48,8 @@ class Shelter < ApplicationRecord
   def average_pet_age
     pets.average(:age).to_f.round(2)
   end
+
+  def self.find_shelter_name_city(id)
+    Shelter.find_by_sql(" SELECT name, city FROM shelters WHERE id = #{id}")
+  end
 end

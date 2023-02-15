@@ -54,6 +54,14 @@ RSpec.describe Shelter, type: :model do
       expect(Shelter.list_pending).to eq([@shelter_1])
       end
     end
+
+    describe '#find_shelter_name_city' do
+      it 'finds the name and city of a shelter via a provided argument' do
+      expect(Shelter.find_shelter_name_city(@shelter_1.id).first.name).to eq('Aurora shelter')
+      expect(Shelter.find_shelter_name_city(@shelter_1.id).first.city).to eq('Aurora, CO')
+      expect(Shelter.find_shelter_name_city(@shelter_1.id).first.attributes).to eq({"id"=>nil, "name"=>"Aurora shelter", "city"=>"Aurora, CO"})
+      end
+    end
   end
   
   describe 'instance methods' do
